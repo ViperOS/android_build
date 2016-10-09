@@ -544,13 +544,25 @@ function print_lunch_menu()
 {
     local uname=$(uname)
     echo
-    echo "You're building on" $uname
-    echo
-    if [ "z${VIPER_DEVICES_ONLY}" != "z" ]; then
-       echo "Breakfast menu... pick a combo:"
-    else
-       echo "Lunch menu... pick a combo:"
-    fi
+
+    echo ""
+    tput setaf 6;
+    tput bold;
+
+    echo "           ▌ ▐·▪   ▄▄▄·▄▄▄ .▄▄▄        .▄▄ ·     "
+    echo "          ▪█·█▌██ ▐█ ▄█▀▄.▀·▀▄ █·▪     ▐█ ▀.     "
+    echo "          ▐█▐█•▐█· ██▀·▐▀▀▪▄▐▀▀▄  ▄█▀▄ ▄▀▀▀█▄    "
+    echo "           ███ ▐█▌▐█▪·•▐█▄▄▌▐█•█▌▐█▌.▐▌▐█▄▪▐█    "
+    echo "          . ▀  ▀▀▀.▀    ▀▀▀ .▀  ▀ ▀█▄▀▪ ▀▀▀▀     "
+    echo "              Feel the venom in your vein        "
+    tput sgr0;
+    echo ""
+    echo "              Welcome to the device menu           "
+    echo ""
+    tput bold;
+    echo " Below are all the devices currently available to be compiled "
+    tput sgr0;
+    echo ""
 
     local i=1
     local choice
@@ -576,7 +588,10 @@ function lunch()
         answer=$1
     else
         print_lunch_menu
-        echo -n "Which would you like? [aosp_arm-eng] "
+        tput setaf 6;
+        tput bold;
+        echo -n "Go ahead and pick a number or enter viper_device-userdebug ... "
+        tput sgr0;
         read answer
     fi
 
