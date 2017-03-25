@@ -668,6 +668,38 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   system_progress = 0.75
 
+  script.Print("******************************************");
+  script.Print("*                                        *");
+  script.Print("*                                        *");
+  script.Print("*    ▌ ▐·▪   ▄▄▄·▄▄▄ .▄▄▄        .▄▄ ·   *");
+  script.Print("*   ▪█·█▌██ ▐█ ▄█▀▄.▀·▀▄ █·▪     ▐█ ▀.   *");
+  script.Print("*   ▐█▐█•▐█· ██▀·▐▀▀▪▄▐▀▀▄  ▄█▀▄ ▄▀▀▀█▄  *");
+  script.Print("*    ███ ▐█▌▐█▪·•▐█▄▄▌▐█•█▌▐█▌.▐▌▐█▄▪▐█  *");
+  script.Print("*   . ▀  ▀▀▀.▀    ▀▀▀ .▀  ▀ ▀█▄▀▪ ▀▀▀▀   *");
+  script.Print("*                                        *");
+  script.Print("*                      http://ViperOS.co *");
+  script.Print("******************************************");
+
+  aokpv = GetBuildProp("ro.viper.version", OPTIONS.info_dict)
+  if os.getenv("VIPER_BUILD") is not None:
+    build = ' '.join(viperv.split('_')[3].split('-')).title()
+    script.Print("*   Version: %s"%(build));
+  elif os.getenv("VIPER_BUILDTYPE") is not None:
+    build = ' '.join(viperv.split('_')[2:]).title()
+    script.Print("*   Version: %s"%(build));
+  else:
+    build = GetBuildProp("ro.build.date", OPTIONS.info_dict)
+    script.Print("******************************************");
+    script.Print("************ UNOFFICIAL BUILD ************");
+    script.Print("******************************************");
+    script.Print("*   Compiled: %s"%(build));
+
+  device = GetBuildProp("ro.viper.device", OPTIONS.info_dict)
+  brand = GetBuildProp("ro.product.brand", OPTIONS.info_dict)
+  name = GetBuildProp("ro.product.name", OPTIONS.info_dict)
+  script.Print("*   Device: %s %s (%s)"%(brand, name, device));
+  script.Print("******************************************");
+
   if OPTIONS.wipe_user_data:
     system_progress -= 0.1
   if HasVendorPartition(input_zip):

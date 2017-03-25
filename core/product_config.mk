@@ -180,11 +180,11 @@ include $(BUILD_SYSTEM)/product.mk
 include $(BUILD_SYSTEM)/device.mk
 
 # A CM build needs only the CM product makefiles.
-ifneq ($(CM_BUILD),)
-  all_product_configs := $(shell find device -path "*/$(CM_BUILD)/lineage.mk")
+ifneq ($(VIPER_BUILD),)
+  all_product_configs := $(shell find device -path "*/$(VIPER_BUILD)/viper.mk")
   ifeq ($(all_product_configs),)
-    # Fall back to cm.mk
-    all_product_configs := $(shell find device -path "*/$(CM_BUILD)/cm.mk")
+    # Fall back to viper.mk
+    all_product_configs := $(shell find device -path "*/$(VIPER_BUILD)/viper.mk")
   endif
 else
   ifneq ($(strip $(TARGET_BUILD_APPS)),)
@@ -196,9 +196,9 @@ else
     # files in the tree.
     all_product_configs := $(get-all-product-makefiles)
   endif # TARGET_BUILD_APPS
-endif # CM_BUILD
+endif # VIPER_BUILD
 
-ifeq ($(CM_BUILD),)
+ifeq ($(VIPER_BUILD),)
 # Find the product config makefile for the current product.
 # all_product_configs consists items like:
 # <product_name>:<path_to_the_product_makefile>
