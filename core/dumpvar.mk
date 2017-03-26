@@ -1,49 +1,4 @@
 
-# List of variables we want to print in the build banner.
-print_build_config_vars := \
-  PLATFORM_VERSION_CODENAME \
-  PLATFORM_VERSION \
-  VIPER_VERSION \
-  TARGET_PRODUCT \
-  TARGET_BUILD_VARIANT \
-  TARGET_BUILD_TYPE \
-  TARGET_BUILD_APPS \
-  TARGET_ARCH \
-  TARGET_ARCH_VARIANT \
-  TARGET_CPU_VARIANT \
-  TARGET_2ND_ARCH \
-  TARGET_2ND_ARCH_VARIANT \
-  TARGET_2ND_CPU_VARIANT \
-  HOST_ARCH \
-  HOST_2ND_ARCH \
-  HOST_OS \
-  HOST_OS_EXTRA \
-  HOST_CROSS_OS \
-  HOST_CROSS_ARCH \
-  HOST_CROSS_2ND_ARCH \
-  HOST_BUILD_TYPE \
-  BUILD_ID \
-  OUT_DIR
-
-ifneq ($(RECOVERY_VARIANT),)
-print_build_config_vars += \
-  RECOVERY_VARIANT
-endif
-ifeq ($(WITH_SU),true)
-print_build_config_vars += \
-  WITH_SU
-endif
-ifeq ($(WITH_GMS),true)
-print_build_config_vars += \
-  WITH_GMS
-endif
-
-ifeq ($(TARGET_BUILD_PDK),true)
-print_build_config_vars += \
-  TARGET_BUILD_PDK \
-  PDK_FUSION_PLATFORM_ZIP
-endif
-
 # ---------------------------------------------------------------
 # the setpath shell function in envsetup.sh uses this to figure out
 # what to add to the path given the config we have chosen.
@@ -103,9 +58,9 @@ endif
 
 ifneq ($(filter report_config,$(DUMP_MANY_VARS)),)
 # Construct the shell commands that print the config banner.
-report_config_sh := echo '============================================';
+report_config_sh := echo ' ';
 report_config_sh += $(foreach v,$(print_build_config_vars),echo '$v=$($(v))';)
-report_config_sh += echo '============================================';
+report_config_sh += echo ' ';
 endif
 
 # Dump mulitple variables to "<var>=<value>" pairs, one per line.
@@ -130,8 +85,43 @@ endif
 endif # CALLED_FROM_SETUP
 
 ifneq ($(PRINT_BUILD_CONFIG),)
-$(info ============================================)
+HOST_OS_EXTRA:=$(shell python -c "import platform; print(platform.platform())")
+ifneq ($(BUILD_WITH_COLORS),0)
+    include $(TOP_DIR)build/core/colors.mk
+endif
+$(info ${CLR_CYN}=================================================================$(CLR_RST))
+$(info ${CLR_YLW}           ▌ ▐·▪   ▄▄▄·▄▄▄ .▄▄▄        .▄▄ ·     )
+$(info ${CLR_YLW}          ▪█·█▌██ ▐█ ▄█▀▄.▀·▀▄ █·▪     ▐█ ▀.     )
+$(info ${CLR_YLW}          ▐█▐█•▐█· ██▀·▐▀▀▪▄▐▀▀▄  ▄█▀▄ ▄▀▀▀█▄    )
+$(info ${CLR_YLW}           ███ ▐█▌▐█▪·•▐█▄▄▌▐█•█▌▐█▌.▐▌▐█▄▪▐█    )
+$(info ${CLR_YLW}          . ▀  ▀▀▀.▀    ▀▀▀ .▀  ▀ ▀█▄▀▪ ▀▀▀▀     )
+$(info ${CLR_GRN}                      Feel the Venom                      )
+$(info ${CLR_CYN}=================================================================$(CLR_RST))
+$(info ${CLR_YLW}PLATFORM_VERSION_CODENAME=$(PLATFORM_VERSION_CODENAME))
+$(info ${CLR_YLW}PLATFORM_VERSION=$(PLATFORM_VERSION))
+$(info $(CLR_BOLD)${CLR_GRN}VIPER_VERSION=$(VIPER_VERSION)$(CLR_RST))
+$(info ${CLR_YLW}TARGET_PRODUCT=$(TARGET_PRODUCT))
+$(info ${CLR_YLW}TARGET_BUILD_VARIANT=$(TARGET_BUILD_VARIANT))
+$(info ${CLR_YLW}TARGET_BUILD_TYPE=$(TARGET_BUILD_TYPE))
+$(info ${CLR_YLW}TARGET_BUILD_APPS=$(TARGET_BUILD_APPS))
+$(info ${CLR_YLW}TARGET_ARCH=$(TARGET_ARCH))
+$(info ${CLR_YLW}TARGET_ARCH_VARIANT=$(TARGET_ARCH_VARIANT))
+$(info ${CLR_YLW}TARGET_CPU_VARIANT=$(TARGET_CPU_VARIANT))
+$(info ${CLR_YLW}TARGET_2ND_ARCH=$(TARGET_2ND_ARCH))
+$(info ${CLR_YLW}TARGET_2ND_ARCH_VARIANT=$(TARGET_2ND_ARCH_VARIANT))
+$(info ${CLR_YLW}TARGET_2ND_CPU_VARIANT=$(TARGET_2ND_CPU_VARIANT))
+$(info ${CLR_YLW}HOST_ARCH=$(HOST_ARCH))
+$(info ${CLR_YLW}HOST_2ND_ARCH=$(HOST_2ND_ARCH))
+$(info ${CLR_YLW}HOST_OS=$(HOST_OS))
+$(info ${CLR_YLW}HOST_OS_EXTRA=$(HOST_OS_EXTRA))
+$(info ${CLR_YLW}HOST_CROSS_OS=$(HOST_CROSS_OS))
+$(info ${CLR_YLW}HOST_CROSS_ARCH=$(HOST_CROSS_ARCH))
+$(info ${CLR_YLW}HOST_CROSS_2ND_ARCH=$(HOST_CROSS_2ND_ARCH))
+$(info ${CLR_YLW}HOST_BUILD_TYPE=$(HOST_BUILD_TYPE))
+$(info ${CLR_YLW}BUILD_ID=$(BUILD_ID))
+$(info ${CLR_YLW}OUT_DIR=$(OUT_DIR))
+
 $(foreach v, $(print_build_config_vars),\
   $(info $v=$($(v))))
-$(info ============================================)
+$(info ${CLR_CYN}=================================================================$(CLR_RST))
 endif
