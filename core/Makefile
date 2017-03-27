@@ -1163,7 +1163,7 @@ $(recovery_ramdisk): $(MINIGZIP) \
 ifndef BOARD_CUSTOM_BOOTIMG_MK
 $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(recovery_ramdisk) $(recovery_kernel) \
 		$(RECOVERYIMAGE_EXTRA_DEPS)
-	@echo "----- Making recovery image ------"
+	@echo -e ${CL_CYN}"----- Making recovery image ------"${CL_RST}
 	$(call build-recoveryimage-target, $@)
 endif # BOARD_CUSTOM_BOOTIMG_MK
 
@@ -2270,13 +2270,13 @@ poison: otapackage
 	@echo -e ${CL_CYN}"                                                                                          "${CL_CYN}
 	@echo -e ${CL_CYN}"                                         VIPEROS                                          "${CL_CYN}
 	@echo -e ${CL_CYN}"                              Based on Android 7.1.1 Nougat                               "${CL_CYN}
-	@echo -e ${CL_RST}"                                                                                          "${CL_RST}
-	@echo -e ${CL_YLW}"                                    This is the time                                      "${CL_YLW}
-	@echo -e ${CL_YLW}"                          Feel the poison running in your veins                           "${CL_YLW}
-	@echo -e ${CL_RST}""${CL_RST}
-	@echo -e ${CL_BLU}"=========================================================================================="${CL_BLU}
-	@echo -e ${CL_RST}"Package Complete: $(VIPER_TARGET_PACKAGE)"${CL_RST}
-	@echo -e ${CL_BLU}"=========================================================================================="${CL_BLU}
+	@echo -e ${CL_RST}"                          Feel the poison running in your veins                           "${CL_RST}
+	@echo -e ${CL_CYN}"====================================-Package complete-===================================="${CL_RST}
+	@echo -e ${CL_CYN}"Folder : "${CL_MAG} $(VIPER_TARGET_PACKAGE_FOLDER)${CL_RST}
+	@echo -e ${CL_CYN}"ZipName: "${CL_MAG} $(VIPER_VERSION).zip${CL_RST}
+	@echo -e ${CL_CYN}"MD5    : "${CL_MAG}" `cat $(VIPER_TARGET_PACKAGE).md5sum | cut -d ' ' -f 1`"${CL_RST}
+	@echo -e ${CL_CYN}"Size   : "${CL_MAG}" `ls -lah $(VIPER_TARGET_PACKAGE) | cut -d ' ' -f 5`"${CL_RST}
+	@echo -e ${CL_CYN}"=========================================================================================="${CL_RST}
 
 endif    # build_ota_package
 # -----------------------------------------------------------------
@@ -2294,7 +2294,7 @@ $(INTERNAL_FACTORY_PACKAGE_TARGET): extensions := $(TARGET_RELEASETOOLS_EXTENSIO
 endif
 
 $(INTERNAL_FACTORY_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(DISTTOOLS)
-	@echo "Package: $@"
+	@echo -e ${CL_YLW}"Package:${CL_RST}" $@"
 	if [ -z $(TARGET_RELEASETOOL_FACTORY_FROM_TARGET_SCRIPT) ]; then \
           echo "Error: Factory script is not defined by target"; \
           exit 1; \
