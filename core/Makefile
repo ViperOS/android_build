@@ -2268,9 +2268,9 @@ poison: otapackage
 	@echo -e ${CL_CYN}"                                        ░ ░        ░                                      "${CL_CYN}
 	@echo -e ${CL_CYN}"                                                                                          "${CL_CYN}
 	@echo -e ${CL_CYN}"                                                                                          "${CL_CYN}
-	@echo -e ${CL_CYN}"                                         VIPEROS                                          "${CL_CYN}
-	@echo -e ${CL_CYN}"                              Based on Android 7.1.1 Nougat                               "${CL_CYN}
-	@echo -e ${CL_RST}"                          Feel the poison running in your veins                           "${CL_RST}
+	@echo -e ${CL_CYN}"                                              ViperOS                                     "${CL_CYN}
+	@echo -e ${CL_CYN}"                              Based on Android 7.1.2 Nougat                               "${CL_CYN}
+	@echo -e ${CL_RST}"                                 Feel the venom in your vein                           "${CL_RST}
 	@echo -e ${CL_CYN}"====================================-Package complete-===================================="${CL_RST}
 	@echo -e ${CL_CYN}"Folder : "${CL_MAG} $(PRODUCT_OUT)${CL_RST}
 	@echo -e ${CL_CYN}"ZipName: "${CL_MAG} $(VIPER_VERSION).zip${CL_RST}
