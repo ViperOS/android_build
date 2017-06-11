@@ -631,8 +631,15 @@ function lunch()
         vendor/viper/build/tools/roomservice.py $product true
         cd - > /dev/null
     fi
+
     TARGET_PRODUCT=$product \
     TARGET_BUILD_VARIANT=$variant \
+
+    export TARGET_PRODUCT=$product
+    export TARGET_BUILD_VARIANT=$variant
+    export TARGET_BUILD_TYPE=release
+
+    printconfig
     build_build_var_cache
 
     if [ $? -ne 0 ]
@@ -649,16 +656,10 @@ function lunch()
         return 1
     fi
 
-    export TARGET_PRODUCT=$product
-    export TARGET_BUILD_VARIANT=$variant
-    export TARGET_BUILD_TYPE=release
-
-    echo
 
     fixup_common_out_dir
 
     set_stuff_for_environment
-    printconfig
     destroy_build_var_cache
 }
 
