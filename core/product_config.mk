@@ -168,10 +168,10 @@ include $(BUILD_SYSTEM)/node_fns.mk
 include $(BUILD_SYSTEM)/product.mk
 include $(BUILD_SYSTEM)/device.mk
 
-# A Lineage build needs only the Lineage product makefiles.
-ifneq ($(LINEAGE_BUILD),)
-  all_product_configs := $(shell find device -path "*/$(LINEAGE_BUILD)/lineage.mk")
-  all_product_configs += $(wildcard vendor/lineage/build/target/product/lineage_$(LINEAGE_BUILD).mk)
+# A Viper build needs only the Viper product makefiles.
+ifneq ($(VIPER_BUILD),)
+  all_product_configs := $(shell find device -path "*/$(VIPER_BUILD)/viper.mk")
+  all_product_configs += $(wildcard vendor/viper/build/target/product/viper_$(VIPER_BUILD).mk)
 else
   ifneq ($(strip $(TARGET_BUILD_APPS)),)
   # An unbundled app build needs only the core product makefiles.
@@ -182,9 +182,9 @@ else
   # files in the tree.
   all_product_configs := $(get-all-product-makefiles)
   endif # TARGET_BUILD_APPS
-endif # LINEAGE_BUILD
+endif # VIPER_BUILD
 
-ifeq ($(LINEAGE_BUILD),)
+ifeq ($(VIPER_BUILD),)
 all_named_products :=
 
 # Find the product config makefile for the current product.

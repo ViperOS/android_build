@@ -1,32 +1,3 @@
-
-# List of variables we want to print in the build banner.
-print_build_config_vars := \
-  PLATFORM_VERSION_CODENAME \
-  PLATFORM_VERSION \
-  LINEAGE_VERSION \
-  TARGET_PRODUCT \
-  TARGET_BUILD_VARIANT \
-  TARGET_BUILD_TYPE \
-  TARGET_PLATFORM_VERSION \
-  TARGET_BUILD_APPS \
-  TARGET_ARCH \
-  TARGET_ARCH_VARIANT \
-  TARGET_CPU_VARIANT \
-  TARGET_2ND_ARCH \
-  TARGET_2ND_ARCH_VARIANT \
-  TARGET_2ND_CPU_VARIANT \
-  HOST_ARCH \
-  HOST_2ND_ARCH \
-  HOST_OS \
-  HOST_OS_EXTRA \
-  HOST_CROSS_OS \
-  HOST_CROSS_ARCH \
-  HOST_CROSS_2ND_ARCH \
-  HOST_BUILD_TYPE \
-  BUILD_ID \
-  OUT_DIR \
-  AUX_OS_VARIANT_LIST
-
 ifeq ($(SDCLANG),true)
 print_build_config_vars += \
   TARGET_USE_SDCLANG
@@ -97,7 +68,11 @@ ifdef dumpvar_goals
   absolute_dumpvar := $(strip $(filter abs-%,$(dumpvar_goals)))
   ifdef absolute_dumpvar
     dumpvar_goals := $(patsubst abs-%,%,$(dumpvar_goals))
-    DUMPVAR_VALUE := $(abspath $($(dumpvar_goals)))
+    ifneq ($(filter /%,$($(dumpvar_goals))),)
+      DUMPVAR_VALUE := $($(dumpvar_goals))
+    else
+      DUMPVAR_VALUE := $(PWD)/$($(dumpvar_goals))
+    endif
     dumpvar_target := dumpvar-abs-$(dumpvar_goals)
   else
     DUMPVAR_VALUE := $($(dumpvar_goals))
@@ -112,13 +87,6 @@ endif # dumpvar_goals
 
 ifneq ($(dumpvar_goals),report_config)
 PRINT_BUILD_CONFIG:=
-endif
-
-ifneq ($(filter report_config,$(DUMP_MANY_VARS)),)
-# Construct the shell commands that print the config banner.
-report_config_sh := echo '============================================';
-report_config_sh += $(foreach v,$(print_build_config_vars),echo '$v=$($(v))';)
-report_config_sh += echo '============================================';
 endif
 
 # Dump mulitple variables to "<var>=<value>" pairs, one per line.
@@ -143,8 +111,39 @@ endif
 endif # CALLED_FROM_SETUP
 
 ifneq ($(PRINT_BUILD_CONFIG),)
-$(info ============================================)
-$(foreach v, $(print_build_config_vars),\
-  $(info $v=$($(v))))
-$(info ============================================)
+HOST_OS_EXTRA:=$(shell python -c "import platform; print(platform.platform())")
+ifneq ($(BUILD_WITH_COLORS),0)
+    include $(TOP_DIR)build/core/colors.mk
+endif
+$(info ${CLR_CYN}=================================================================$(CLR_RST))
+$(info ${CLR_CYN}           ▌ ▐·▪   ▄▄▄·▄▄▄ .▄▄▄        .▄▄ ·     )
+$(info ${CLR_CYN}          ▪█·█▌██ ▐█ ▄█▀▄.▀·▀▄ █·▪     ▐█ ▀.     )
+$(info ${CLR_CYN}          ▐█▐█•▐█· ██▀·▐▀▀▪▄▐▀▀▄  ▄█▀▄ ▄▀▀▀█▄    )
+$(info ${CLR_CYN}           ███ ▐█▌▐█▪·•▐█▄▄▌▐█•█▌▐█▌.▐▌▐█▄▪▐█    )
+$(info ${CLR_CYN}          . ▀  ▀▀▀.▀    ▀▀▀ .▀  ▀ ▀█▄▀▪ ▀▀▀▀     )
+$(info ${CLR_CYN}              Feel the venom in your vein        )
+$(info ${CLR_CYN}=================================================================$(CLR_RST))
+$(info ${CLR_CYN}PLATFORM_VERSION_CODENAME=$(PLATFORM_VERSION_CODENAME))
+$(info ${CLR_CYN}PLATFORM_VERSION=$(PLATFORM_VERSION))
+$(info $(CLR_BOLD)${CLR_CYN}VIPER_VERSION=$(VIPER_VERSION)$(CLR_RST))
+$(info ${CLR_CYN}TARGET_PRODUCT=$(TARGET_PRODUCT))
+$(info ${CLR_CYN}TARGET_BUILD_VARIANT=$(TARGET_BUILD_VARIANT))
+$(info ${CLR_CYN}TARGET_BUILD_TYPE=$(TARGET_BUILD_TYPE))
+$(info ${CLR_CYN}TARGET_BUILD_APPS=$(TARGET_BUILD_APPS))
+$(info ${CLR_CYN}TARGET_ARCH=$(TARGET_ARCH))
+$(info ${CLR_CYN}TARGET_ARCH_VARIANT=$(TARGET_ARCH_VARIANT))
+$(info ${CLR_CYN}TARGET_CPU_VARIANT=$(TARGET_CPU_VARIANT))
+$(info ${CLR_CYN}TARGET_2ND_ARCH=$(TARGET_2ND_ARCH))
+$(info ${CLR_CYN}TARGET_2ND_ARCH_VARIANT=$(TARGET_2ND_ARCH_VARIANT))
+$(info ${CLR_CYN}TARGET_2ND_CPU_VARIANT=$(TARGET_2ND_CPU_VARIANT))
+$(info ${CLR_CYN}HOST_ARCH=$(HOST_ARCH))
+$(info ${CLR_CYN}HOST_2ND_ARCH=$(HOST_2ND_ARCH))
+$(info ${CLR_CYN}HOST_OS=$(HOST_OS))
+$(info ${CLR_CYN}HOST_OS_EXTRA=$(HOST_OS_EXTRA))
+$(info ${CLR_CYN}HOST_CROSS_OS=$(HOST_CROSS_OS))
+$(info ${CLR_CYN}HOST_CROSS_ARCH=$(HOST_CROSS_ARCH))
+$(info ${CLR_CYN}HOST_CROSS_2ND_ARCH=$(HOST_CROSS_2ND_ARCH))
+$(info ${CLR_CYN}HOST_BUILD_TYPE=$(HOST_BUILD_TYPE))
+$(info ${CLR_CYN}BUILD_ID=$(BUILD_ID))
+$(info ${CLR_CYN}OUT_DIR=$(OUT_DIR))
 endif
