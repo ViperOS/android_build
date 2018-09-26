@@ -506,8 +506,8 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print("*                in your vein            *");
   script.Print("*                                        *");
   script.Print("******************************************");
-  if GetBuildProp("ro.modversion", OPTIONS.info_dict) is not None:
-    buildid = GetBuildProp("ro.modversion", OPTIONS.info_dict)
+  if GetBuildProp("ro.viper.build.version", OPTIONS.info_dict) is not None:
+    buildid = GetBuildProp("ro.viper.build.version", OPTIONS.info_dict)
     buildidn = GetBuildProp("ro.build.id", OPTIONS.info_dict)
     buildday = GetBuildProp("ro.build.date", OPTIONS.info_dict)
     securep = GetBuildProp("ro.build.version.security_patch", OPTIONS.info_dict)
