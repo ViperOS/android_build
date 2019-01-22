@@ -139,7 +139,6 @@ function check_product()
     fi
     if (echo -n $1 | grep -q -e "^viper_") ; then
         VIPER_BUILD=$(echo -n $1 | sed -e 's/^viper_//g')
-        export BUILD_NUMBER=$( (date +%s%N ; echo $VIPER_BUILD; hostname) | openssl sha1 | sed -e 's/.*=//g; s/ //g' | cut -c1-10 )
     else
         VIPER_BUILD=
     fi
