@@ -1683,6 +1683,7 @@ endif
 
 # $(1): output file
 define build-systemimage-target
+  $(hide) ./vendor/viper/tools/generate_json_build_info.sh $(VIPER_VERSION)
   $(hide) ./vendor/viper/tools/changelog.sh
   $(hide) mv $(PRODUCT_OUT)/Changelog.txt $(PRODUCT_OUT)/$(VIPER_VERSION)-Changelog.txt
   @echo "Target system fs image: $(1)"
