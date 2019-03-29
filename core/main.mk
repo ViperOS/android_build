@@ -177,6 +177,8 @@ else
   endif
 endif
 
+# Add our custom properties to the build properties.
+ADDITIONAL_BUILD_PROPERTIES += $(PRODUCT_PROPERTY_OVERRIDES)
 
 # Bring in standard build system definitions.
 include $(BUILD_SYSTEM)/definitions.mk
